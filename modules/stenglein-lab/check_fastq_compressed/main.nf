@@ -2,7 +2,7 @@ process CHECK_FASTQ_COMPRESSED {
     tag "$meta.id"
     label 'process_low'
 
-    // this is all groovy so no containers needed
+    container 'quay.io/nextflow/bash'
 
     input:
     tuple val(meta), path(files)                                                
