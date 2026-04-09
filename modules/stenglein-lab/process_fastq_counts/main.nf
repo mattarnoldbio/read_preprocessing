@@ -22,7 +22,7 @@ process PROCESS_FASTQ_COUNTS {
     script:
     """
     # make a copy of input file so can be output to results dir
-    cp $fastq_counts_tsv all_fastq_counts_tidy.txt
+    cp $fastq_counts_tsv all_read_counts.txt
 
     # make a slightly untidy table too
     # process_fastq_counts.R $fastq_counts_tsv 
