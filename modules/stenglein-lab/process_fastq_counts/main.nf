@@ -27,9 +27,9 @@ process PROCESS_FASTQ_COUNTS {
     # make a slightly untidy table too
     # process_fastq_counts.R $fastq_counts_tsv 
     
-    #cat <<-END_VERSIONS > versions.yml
-    #"!{task.process}":
-    #    R: \$(echo \$(R --version 2>&1))
-    #END_VERSIONS
+    cat <<-END_VERSIONS > versions.yml
+    "!{task.process}":
+        R: \$(echo \$(R --version 2>&1))
+    END_VERSIONS
     """
 }
