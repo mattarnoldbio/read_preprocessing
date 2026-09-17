@@ -2,11 +2,10 @@ process COLLAPSE_DUPLICATE_READS {
   label 'lowmem_threaded'
 
   // singularity info for this process
-  if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-    container "https://depot.galaxyproject.org/singularity/cd-hit-auxtools:4.8.1--h7d875b9_1"
-  } else {
-    container "quay.io/biocontainers/cd-hit-auxtools:4.8.1--h7d875b9_1"
-  }
+  container "${ workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container ?
+     'https://depot.galaxyproject.org/singularity/cd-hit-auxtools:4.8.1--h7d875b9_1' :
+     'quay.io/biocontainers/cd-hit-auxtools:4.8.1--h7d875b9_1' }"
+
 
   input:
   tuple val(meta), path(input_fastq) 
