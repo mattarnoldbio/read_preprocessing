@@ -8,8 +8,8 @@ process SAVE_OUTPUT_FILE {
     label 'process_low'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    'https://depot.galaxyproject.org/singularity/pigz:2.3.4' :
-    'biocontainers/pigz:2.3.4' }"
+    'oras://community.wave.seqera.io/library/coreutils:9.12--34be2b55ff8e6687' :
+    'community.wave.seqera.io/library/coreutils:9.12--83081953909e2904' }"
 
     input:
     path(file_to_save, stageAs: "input/*")
