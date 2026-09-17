@@ -8,6 +8,7 @@ process CHECK_FASTQ_COMPRESSED {
     tuple val(meta), path(files)                                                
 
     output:
+    val(meta)
     // path "versions.yml" ,             emit: versions
 
     when:
