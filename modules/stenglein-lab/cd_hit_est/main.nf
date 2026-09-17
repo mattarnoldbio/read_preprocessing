@@ -3,11 +3,10 @@ process CD_HIT_EST {
   label 'lowmem_threaded'
 
   conda (params.enable_conda ? 'bioconda::cd-hit=4.8.1' : null)
-  if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-    container "https://depot.galaxyproject.org/singularity/cd-hit:4.8.1--h5b5514e_7" 
-  } else {
-    container "quay.io/biocontainers/cd-hit:4.8.1--h5b5514e_7" 
-  }
+
+  container "${ workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container ?
+    'https://depot.galaxyproject.org/singularity/cd-hit:4.8.1--h5b5514e_7' :
+    'quay.io/biocontainers/cd-hit:4.8.1--h5b5514e_7'  }"
 
   input:
   tuple val(meta), path(reads)

@@ -7,6 +7,10 @@ process SAVE_OUTPUT_FILES {
     tag "$file_to_save"
     label 'process_low'
 
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+    'https://depot.galaxyproject.org/singularity/pigz:2.3.4' :
+    'biocontainers/pigz:2.3.4' }"
+
     input:
     path(files_to_save, stageAs: "input/*")
 
