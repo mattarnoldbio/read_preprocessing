@@ -33,12 +33,10 @@ workflow MARSHAL_FASTQ {
   // comma-separated list (no spaces)
   def fastq_dirs = input_fastq_dir.tokenize(',')
 
-  // construct list of directories in which to find fastq
-  fastq_dir_list = []
-  for (dir in fastq_dirs){
-     def file_pattern = "${dir}/${fastq_pattern}"
-     fastq_dir_list.add(file_pattern)
-  }
+    // construct list of directories in which to find fastq
+    fastq_dir_list = fastq_dirs.collect { dir ->
+      "${dir}/${fastq_pattern}"
+    }
 
   /*
    These fastq files are the main input to this workflow
