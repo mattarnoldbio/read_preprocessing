@@ -59,6 +59,8 @@ process CUTADAPT {
 
     input:
     tuple val(meta), path(reads)
+    path adapters_3p
+    path adapters_5p
 
     output:
     tuple val(meta), path('*.trim.fastq.gz') , emit: reads
@@ -77,9 +79,16 @@ process CUTADAPT {
     def paired_end_args  = meta.single_end ? '': task.ext.args2 
     def prefix           = task.ext.prefix ?: "${meta.id}"
     def trimmed          = meta.single_end ? "-o ${prefix}.trim.fastq.gz" : "-o ${prefix}_1.trim.fastq.gz -p ${prefix}_2.trim.fastq.gz"
+
+    def a3 = adapters_3p ? "-a file:${adapters_3p}" : ''
+    def a5 = adapters_5p ? "-g file:${adapters_5p}" : ''
+    def r3 = adapters_3p ? "-A file:${adapters_3p}" : ''
+    def r5 = adapters_5p ? "-G file:${adapters_5p}" : ''
     """
     cutadapt \\
         --cores $task.cpus \\
+        ${a3} ${a5} \\
+        ${r3} ${r5} \\
         $args \\
         $paired_end_args \\
         $trimmed \\

@@ -48,7 +48,10 @@ workflow PREPROCESS_READS {
   ch_versions = ch_versions.mix ( FASTQC_PRE.out.versions )      
 
   // trim low quality bases and adapters from reads
-  CUTADAPT ( ch_reads )
+  ch_adapters_3p = params.adapters_3p ? file(params.adapters_3p, checkIfExists: true) : []
+  ch_adapters_5p = params.adapters_5p ? file(params.adapters_5p, checkIfExists: true) : []
+
+  CUTADAPT(ch_reads, ch_adapters_3p, ch_adapters_5p)
   ch_versions = ch_versions.mix ( CUTADAPT.out.versions ) 
 
   // BBDUK to remove adapter-containing reads that made it past cutadapt adapter trimming
